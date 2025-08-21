@@ -1,4 +1,4 @@
-# OS files
+# OS
 .DS_Store
 Thumbs.db
 
@@ -7,26 +7,21 @@ __pycache__/
 *.pyc
 *.pyo
 *.pyd
-.env
-.venv/
-*.sqlite3
-
-# Virtualenv
-env/
-venv/
-
-# Logs
 *.log
 
-# IDE/editor
-.vscode/
-.idea/
+# Virtual environments
+venv/
+.env/
+.venv/
+env/
 
 # Django
-*.pot
-*.py[cod]
-*.mo
-*.db
+*.sqlite3
 db.sqlite3
-/staticfiles/
 /media/
+staticfiles/
+
+# IDE/editor
+.idea/
+.vscode/
+*.swp
