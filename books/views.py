@@ -7,8 +7,17 @@ from books.models import User
 from books.permissions import IsAdminUserRole
 from books.serializers import UserSerializer, LoginUserSerializer
 
+from rest_framework import generics
+from books.models import Category, Book
+from books.serializers import CategorySerializer, BookSerializer
 
-# Create your views here.
+
+# Category CRUD
+class CategoryListCreateView(generics.ListCreateAPIView):
+    queryset = Category.objects.all()
+    serializer_class = CategorySerializer
+
+
 class UserListCreateAPIView(APIView):
     def get(self,request):
         users = User.objects.all()
@@ -43,11 +52,19 @@ class UserDetailAPIView(APIView):
             serializer.save()
             return Response(serializer.data)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+class CategoryDetailView(generics.RetrieveUpdateDestroyAPIView):
+    queryset = Category.objects.all()
+    serializer_class = CategorySerializer
 
-    def delete(self,request,pk):
-        user = User.objects.get(pk=pk)
-        user.delete()
-        return Response(status=status.HTTP_204_NO_CONTENT)
+
+class BookListCreateView(generics.ListCreateAPIView):
+    queryset = Book.objects.all()
+    serializer_class = BookSerializer
+
+
+class BookDetailView(generics.RetrieveUpdateDestroyAPIView):
+    queryset = Book.objects.all()
+    serializer_class = BookSerializer
 
 class RegisterUserAPIView(APIView):
     def post(self,request):

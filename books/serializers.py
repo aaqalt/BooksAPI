@@ -2,7 +2,7 @@ from django.contrib.auth import authenticate
 from rest_framework import serializers
 from rest_framework_simplejwt.tokens import RefreshToken
 
-from books.models import User
+from books.models import User,Category,Book
 
 
 class UserSerializer(serializers.ModelSerializer):
@@ -50,3 +50,24 @@ class LoginUserSerializer(serializers.Serializer):
                 "role": user.role,
             }
         raise serializers.ValidationError("Invalid username or password")
+
+class CategorySerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Category
+        fields = ['id','name']
+
+class BookSerializer(serializers.ModelSerializer):
+    category = CategorySerializer(read_only=True)
+    category_id = serializers.PrimaryKeyRelatedField(
+        queryset=Category.objects.all(),
+        source='category',
+        write_only=True
+    )
+    class Meta:
+        model = Book
+        fields = [
+            "id", "title", "author", "description",
+            "published_date", "category", "category_id",
+            "available_copies", "total_copies", "created_at"
+        ]
+        read_only_fields = ['created_only']
