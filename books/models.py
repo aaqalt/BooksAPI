@@ -9,8 +9,6 @@ class User(AbstractUser):
     phone = models.CharField(max_length=15, unique=True)
     role = models.CharField(max_length=10, choices=ROLE_CHOICES,default="member")
 
-class Book(models.Model):
-    pass
 
 class Borrow(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
